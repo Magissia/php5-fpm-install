@@ -1,6 +1,10 @@
 #!/bin/sh
 echo "By running this script, you have agreed and understood to anything you may have to agree to before running it, like license and stuff"
-echo ""
+echo "Stuff may break, that's on you"
+SCRIPTPATH=$0
+SCRIPTDIRECTORY="`dirname \"$SCRIPTPATH\"`"
+pkgbase="php"
+pkgver="5.6.22"
 
 function CheckPackageManager 	{
 	CheckPacman()
@@ -24,6 +28,11 @@ function CheckYum	{
 					}
 
 function PacManInstall 	{
+	[ -e $SCRIPTDIRECTORY/PKGBUILD ] || { exit 11; echo "PKGBUILD missing !"}
+	[ -e $SCRIPTDIRECTORY/generate_patches ] || { exit 12; echo "generate_patches missing !"}
+	[ -e $SCRIPTDIRECTORY/php-fpm.install ] || { exit 13; echo "php-fpm.install missing !"}
+	[ -e $SCRIPTDIRECTORY/php-fpm.patch ] || { exit 13; echo "php-fpm.patch missing !"}
+	[ -e $SCRIPTDIRECTORY/php-fpm.tmpfiles ] || { exit 13; echo "php-fpm.tmpfiles missing !"}
 	command -v makepkg >/dev/null 2>&1 || pacman -S --noconfirm makepkg
 	command -v make >/dev/null 2>&1 || pacman -S --noconfirm make
 	command -v curl >/dev/null 2>&1 || pacman -S --noconfirm curl
@@ -49,4 +58,30 @@ function PacManInstall 	{
 	[ -e /usr/lib/libodbc.so ] || pacman -S --noconfirm unixobdc
 	[ -e /usr/lib/libprocps.so ] || pacman -S --noconfirm procps-ng
 						}
-						
+
+function AptInstall	{
+	apt-get install -y build-essential \
+	autoconf libtool libxml2 libxml2-dev \
+	libcurl4-gnutls-dev libbz2-1.0 libbz2-dev \
+	libjpeg-dev libpng12-dev libfreetype6 libfreetype6-dev \
+	libldap-2.4-2 libldap2-dev libmcrypt4 libmcrypt-dev libmysqlclient-dev \
+	libxslt1.1 libxslt1-dev libxt-dev libfreetype6 libicu-dev libcurl3 libonig2 \
+	libqdbm14 libvpx1 libxpm4 libvpx-dev libxpm-dev
+	mkdir -p ~/src/php
+	wget https://www.php.net/distributions/${pkgbase}-${pkgver}.tar.xz -O ~/src/php/${pkgbase}-${pkgver}.tar.xz
+	tar zxvf ~/src/php/${pkgbase}-${pkgver}.tar.xz -C ~/src/php/
+	cd ~/src/php/${pkgbase}-${pkgver}
+	./configure \
+		--config-cache \
+		--prefix=/usr \
+		--sbindir=/usr/bin \
+		--sysconfdir=/etc/php5 \
+		--localstatedir=/var \
+		--with-layout=GNU \
+		--with-config-file-path=/etc/php5 \
+		--with-config-file-scan-dir=/etc/php5/conf.d \
+		--disable-rpath \
+		--mandir=/usr/share/man \
+		--without-pear \
+		--enable-zend-signals \
+					}
