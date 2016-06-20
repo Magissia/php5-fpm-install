@@ -1,75 +1,77 @@
 # $Id$
-# Maintainer: Pierre Schmitz <pierre@archlinux.de>
+# Maintainer: Magissia <ArchPackage@magissia.com>
 
-pkgbase=php
-pkgname=('php'
-         'php-cgi'
-         'php-apache'
-         'php-fpm'
-         'php-embed'
-         'php-phpdbg'
-         'php-pear'
-         'php-enchant'
-         'php-gd'
-         'php-imap'
-         'php-intl'
-         'php-ldap'
-         'php-mcrypt'
-         'php-mssql'
-         'php-odbc'
-         'php-pgsql'
-         'php-pspell'
-         'php-snmp'
-         'php-sqlite'
-         'php-tidy'
-         'php-xsl')
+pkgbase=php5
+pkgname=("${pkgbase}"
+         "${pkgbase}-cgi"
+         "${pkgbase}-fpm"
+         "${pkgbase}-embed"
+         "${pkgbase}-phpdbg"
+         "${pkgbase}-dblib"
+         "${pkgbase}-pear"
+         "${pkgbase}-enchant"
+         "${pkgbase}-gd"
+         "${pkgbase}-imap"
+         "${pkgbase}-intl"
+         "${pkgbase}-ldap"
+         "${pkgbase}-mcrypt"
+         "${pkgbase}-mssql"
+         "${pkgbase}-odbc"
+         "${pkgbase}-pgsql"
+         "${pkgbase}-pspell"
+         "${pkgbase}-snmp"
+         "${pkgbase}-sqlite"
+         "${pkgbase}-tidy"
+         "${pkgbase}-xsl")
 pkgver=5.6.16
 pkgrel=2
 arch=('i686' 'x86_64')
 license=('PHP')
 url='http://www.php.net'
-makedepends=('apache' 'c-client' 'postgresql-libs' 'libldap' 'postfix'
+makedepends=('c-client' 'postgresql-libs' 'libldap' 'postfix'
              'sqlite' 'unixodbc' 'net-snmp' 'libzip' 'enchant' 'file' 'freetds'
              'libmcrypt' 'tidyhtml' 'aspell' 'libltdl' 'gd' 'icu'
              'curl' 'libxslt' 'openssl' 'db' 'gmp' 'systemd')
 checkdepends=('procps-ng')
-source=("http://www.php.net/distributions/${pkgbase}-${pkgver}.tar.xz"
-        "http://www.php.net/distributions/${pkgbase}-${pkgver}.tar.xz.asc"
+source=("http://www.php.net/distributions/${pkgbase%5}-${pkgver}.tar.xz"
+        "http://www.php.net/distributions/${pkgbase%5}-${pkgver}.tar.xz.asc"
         'php.ini.patch' 'apache.conf' 'php-fpm.conf.in.patch'
         'logrotate.d.php-fpm' 'php-fpm.service' 'php-fpm.tmpfiles')
-md5sums=('3f1d999ed1f9cb5713c9a0161c557f2f'
+md5sums=('SKIP'
          'SKIP'
-         '39eff6cc99dae4ec3b52125e6229de7e'
-         'dec2cbaad64e3abf4f0ec70e1de4e8e9'
-         '16b5e2e4da59f15bea4c2db78a7bc8dc'
-         '25bc67ad828e8147a817410b68d8016c'
-         'cc2940f5312ba42e7aa1ddfab74b84c4'
-         'c60343df74f8e1afb13b084d5c0e47ed')
+         'SKIP'
+         'SKIP'
+         'SKIP'
+         'SKIP'
+         'SKIP'
+         'SKIP')
 validpgpkeys=('6E4F6AB321FDC07F2C332E3AC2BF0BC433CFC8B3'
               '0BD78B5F97500D450838F95DFE857D9A90D90EC1')
 
 prepare() {
-	cd ${srcdir}/${pkgbase}-${pkgver}
+	cd ${srcdir}/${pkgbase%5}-${pkgver}
 
 	patch -p0 -i ${srcdir}/php.ini.patch
 	patch -p0 -i ${srcdir}/php-fpm.conf.in.patch
-	# Just because our Apache 2.4 is configured with a threaded MPM by default does not mean we want to build a ZTS PHP.
-	# Let's supress this behaviour and build a SAPI that works fine with the prefork MPM.
-	sed '/APACHE_THREADED_MPM=/d' -i sapi/apache2handler/config.m4 -i configure
+
+	# Allow php-tidy to compile with tidy-html5
+	sed 's/buffio\.h/tidybuffio\.h/' -i ext/tidy/tidy.c
 }
 
 build() {
-	local _phpconfig="--srcdir=../${pkgbase}-${pkgver} \
+	local _phpconfig="--srcdir=../${pkgbase%5}-${pkgver} \
 		--config-cache \
 		--prefix=/usr \
-		--sbindir=/usr/bin \
-		--sysconfdir=/etc/php \
+		--sysconfdir=/etc/${pkgbase} \
 		--localstatedir=/var \
+		--libdir=/usr/lib/${pkgbase} \
+		--datarootdir=/usr/share/${pkgbase} \
+		--datadir=/usr/share/${pkgbase} \
+		--program-suffix=${pkgbase#php} \
 		--with-layout=GNU \
-		--with-config-file-path=/etc/php \
-		--with-config-file-scan-dir=/etc/php/conf.d \
+		--with-config-file-path=/etc/${pkgbase} \
+		--with-config-file-scan-dir=/etc/${pkgbase}/conf.d \
 		--disable-rpath \
-		--mandir=/usr/share/man \
 		--without-pear \
 		"
 
@@ -136,17 +138,15 @@ build() {
 		--with-zlib \
 		"
 
-	EXTENSION_DIR=/usr/lib/php/modules
-	export EXTENSION_DIR
-	PEAR_INSTALLDIR=/usr/share/pear
-	export PEAR_INSTALLDIR
+	export EXTENSION_DIR=/usr/lib/${pkgbase}/modules
+	export PEAR_INSTALLDIR=/usr/share/${pkgbase}/pear
 
 	cd ${srcdir}/${pkgbase}-${pkgver}
 
 	# php
 	mkdir ${srcdir}/build-php
 	cd ${srcdir}/build-php
-	ln -s ../${pkgbase}-${pkgver}/configure
+	ln -s ../${pkgbase%5}-${pkgver}/configure
 	./configure ${_phpconfig} \
 		--disable-cgi \
 		--with-readline \
@@ -161,15 +161,6 @@ build() {
 	./configure ${_phpconfig} \
 		--disable-cli \
 		--enable-cgi \
-		${_phpextensions}
-	make
-
-	# apache
-	cp -a ${srcdir}/build-php ${srcdir}/build-apache
-	cd ${srcdir}/build-apache
-	./configure ${_phpconfig} \
-		--disable-cli \
-		--with-apxs2 \
 		${_phpextensions}
 	make
 
@@ -205,7 +196,8 @@ build() {
 	make
 
 	# pear
-	cp -a ${srcdir}/build-php ${srcdir}/build-pear
+	sed -i 's#@$(top_builddir)/sapi/cli/php $(PEAR_INSTALL_FLAGS) pear/install-pear-nozlib.phar -d#@$(top_builddir)/sapi/cli/php $(PEAR_INSTALL_FLAGS) pear/install-pear-nozlib.phar -p $(bindir)/php$(program_suffix) -d#' ${srcdir}/php-${pkgver}/pear/Makefile.frag
+	cp -Ta ${srcdir}/build-php ${srcdir}/build-pear
 	cd ${srcdir}/build-pear
 	./configure ${_phpconfig} \
 		--disable-cgi \
@@ -236,7 +228,7 @@ check() {
 	echo
 }
 
-package_php() {
+package_php5() {
 	pkgdesc='An HTML-embedded scripting language'
 	depends=('pcre' 'libxml2' 'curl' 'libzip')
 	backup=('etc/php/php.ini')
@@ -258,14 +250,14 @@ package_php() {
 	ln -sf phar.phar ${pkgdir}/usr/bin/phar
 }
 
-package_php-cgi() {
+package_php5-cgi() {
 	pkgdesc='CGI and FCGI SAPI for PHP'
 	depends=('php')
 
 	install -D -m755 ${srcdir}/build-cgi/sapi/cgi/php-cgi ${pkgdir}/usr/bin/php-cgi
 }
 
-package_php-apache() {
+package_php5-apache() {
 	pkgdesc='Apache SAPI for PHP'
 	depends=('php' 'apache')
 	backup=('etc/httpd/conf/extra/php5_module.conf')
@@ -274,7 +266,7 @@ package_php-apache() {
 	install -D -m644 ${srcdir}/apache.conf ${pkgdir}/etc/httpd/conf/extra/php5_module.conf
 }
 
-package_php-fpm() {
+package_php5-fpm() {
 	pkgdesc='FastCGI Process Manager for PHP'
 	depends=('php' 'systemd')
 	backup=('etc/php/php-fpm.conf')
@@ -289,7 +281,7 @@ package_php-fpm() {
 	install -D -m644 ${srcdir}/php-fpm.service ${pkgdir}/usr/lib/systemd/system/php-fpm.service
 }
 
-package_php-embed() {
+package_php5-embed() {
 	pkgdesc='Embedded PHP SAPI library'
 	depends=('php')
 
@@ -297,14 +289,14 @@ package_php-embed() {
 	install -D -m644 ${srcdir}/${pkgbase}-${pkgver}/sapi/embed/php_embed.h ${pkgdir}/usr/include/php/sapi/embed/php_embed.h
 }
 
-package_php-phpdbg() {
+package_php5-phpdbg() {
 	pkgdesc='Interactive PHP debugger'
 	depends=('php')
 
 	install -D -m755 ${srcdir}/build-phpdbg/sapi/phpdbg/phpdbg ${pkgdir}/usr/bin/phpdbg
 }
 
-package_php-pear() {
+package_php5-pear() {
 	pkgdesc='PHP Extension and Application Repository'
 	depends=('php')
 	backup=('etc/php/pear.conf')
@@ -314,56 +306,56 @@ package_php-pear() {
 	rm -rf ${pkgdir}/usr/share/pear/.{channels,depdb,depdblock,filemap,lock,registry}
 }
 
-package_php-enchant() {
+package_php5-enchant() {
 	pkgdesc='enchant module for PHP'
 	depends=('php' 'enchant')
 
 	install -D -m755 ${srcdir}/build-php/modules/enchant.so ${pkgdir}/usr/lib/php/modules/enchant.so
 }
 
-package_php-gd() {
+package_php5-gd() {
 	pkgdesc='gd module for PHP'
 	depends=('php' 'gd')
 
 	install -D -m755 ${srcdir}/build-php/modules/gd.so ${pkgdir}/usr/lib/php/modules/gd.so
 }
 
-package_php-imap() {
+package_php5-imap() {
 	pkgdesc='imap module for PHP'
 	depends=('php' 'c-client')
 
 	install -D -m755 ${srcdir}/build-php/modules/imap.so ${pkgdir}/usr/lib/php/modules/imap.so
 }
 
-package_php-intl() {
+package_php5-intl() {
 	pkgdesc='intl module for PHP'
 	depends=('php' 'icu')
 
 	install -D -m755 ${srcdir}/build-php/modules/intl.so ${pkgdir}/usr/lib/php/modules/intl.so
 }
 
-package_php-ldap() {
+package_php5-ldap() {
 	pkgdesc='ldap module for PHP'
 	depends=('php' 'libldap')
 
 	install -D -m755 ${srcdir}/build-php/modules/ldap.so ${pkgdir}/usr/lib/php/modules/ldap.so
 }
 
-package_php-mcrypt() {
+package_php5-mcrypt() {
 	pkgdesc='mcrypt module for PHP'
 	depends=('php' 'libmcrypt' 'libltdl')
 
 	install -D -m755 ${srcdir}/build-php/modules/mcrypt.so ${pkgdir}/usr/lib/php/modules/mcrypt.so
 }
 
-package_php-mssql() {
+package_php5-mssql() {
 	pkgdesc='mssql module for PHP'
 	depends=('php' 'freetds')
 
 	install -D -m755 ${srcdir}/build-php/modules/mssql.so ${pkgdir}/usr/lib/php/modules/mssql.so
 }
 
-package_php-odbc() {
+package_php5-odbc() {
 	pkgdesc='ODBC modules for PHP'
 	depends=('php' 'unixodbc')
 
@@ -371,7 +363,7 @@ package_php-odbc() {
 	install -D -m755 ${srcdir}/build-php/modules/pdo_odbc.so ${pkgdir}/usr/lib/php/modules/pdo_odbc.so
 }
 
-package_php-pgsql() {
+package_php5-pgsql() {
 	pkgdesc='PostgreSQL modules for PHP'
 	depends=('php' 'postgresql-libs')
 
@@ -379,21 +371,21 @@ package_php-pgsql() {
 	install -D -m755 ${srcdir}/build-php/modules/pdo_pgsql.so ${pkgdir}/usr/lib/php/modules/pdo_pgsql.so
 }
 
-package_php-pspell() {
+package_php5-pspell() {
 	pkgdesc='pspell module for PHP'
 	depends=('php' 'aspell')
 
 	install -D -m755 ${srcdir}/build-php/modules/pspell.so ${pkgdir}/usr/lib/php/modules/pspell.so
 }
 
-package_php-snmp() {
+package_php5-snmp() {
 	pkgdesc='snmp module for PHP'
 	depends=('php' 'net-snmp')
 
 	install -D -m755 ${srcdir}/build-php/modules/snmp.so ${pkgdir}/usr/lib/php/modules/snmp.so
 }
 
-package_php-sqlite() {
+package_php5-sqlite() {
 	pkgdesc='sqlite module for PHP'
 	depends=('php' 'sqlite')
 
@@ -401,14 +393,14 @@ package_php-sqlite() {
 	install -D -m755 ${srcdir}/build-php/modules/pdo_sqlite.so ${pkgdir}/usr/lib/php/modules/pdo_sqlite.so
 }
 
-package_php-tidy() {
+package_php5-tidy() {
 	pkgdesc='tidy module for PHP'
 	depends=('php' 'tidyhtml')
 
 	install -D -m755 ${srcdir}/build-php/modules/tidy.so ${pkgdir}/usr/lib/php/modules/tidy.so
 }
 
-package_php-xsl() {
+package_php5-xsl() {
 	pkgdesc='xsl module for PHP'
 	depends=('php' 'libxslt')
 
