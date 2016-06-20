@@ -66,7 +66,7 @@ function AptInstall	{
 	libjpeg-dev libpng12-dev libfreetype6 libfreetype6-dev \
 	libldap-2.4-2 libldap2-dev libmcrypt4 libmcrypt-dev libmysqlclient-dev \
 	libxslt1.1 libxslt1-dev libxt-dev libfreetype6 libicu-dev libcurl3 libonig2 \
-	libqdbm14 libvpx1 libxpm4 libvpx-dev libxpm-dev
+	libqdbm14 libvpx1 libxpm4 libvpx-dev libxpm-dev checkinstall
 	mkdir -p ~/src/php
 	wget https://www.php.net/distributions/${pkgbase}-${pkgver}.tar.xz -O ~/src/php/${pkgbase}-${pkgver}.tar.xz
 	tar zxvf ~/src/php/${pkgbase}-${pkgver}.tar.xz -C ~/src/php/
@@ -85,3 +85,12 @@ function AptInstall	{
 		--without-pear \
 		--enable-zend-signals \
 					}
+
+	make && checkinstall -D -y \
+			--install=no
+			--pkgname=php5-fpm
+			--pkgversion=$pkgver
+			--pkglicence=GPL
+			--maintainer=Unknown #<-- FIXME
+			--nodoc
+			--requires="init-system-helpers  \(\>= 1.18\~\), libbz2-1.0, libc6 \(\>= 2.15\), libcomerr2 \(>=1.01\), libdb5.3, libgssapi-krb5-2 \(\>= 1.6.dfsg.2\), libk5crypto3 \(\>= 1.6.dfsg.2\), libkrb5-3 \(\>= 1.6.dfsg.2\), libmagic1, libonig2 (>= 5.9.5), libpcre3, libqdbm14 \(\>= 1.8.74\), libssl1.0.2 \(\>= 1.0.2d\), libsystemd0, libxml2 \(\>= 2.9.0\), mime-support, tzdata, ucf, zlib1g \(\>= 1:1.1.4\)"
