@@ -34,7 +34,7 @@ url='http://www.php.net'
 makedepends=('c-client' 'postgresql-libs' 'libldap' 'postfix'
              'sqlite' 'unixodbc' 'net-snmp' 'libzip' 'enchant' 'file' 'freetds'
              'libmcrypt' 'tidyhtml' 'aspell' 'libltdl' 'gd' 'icu'
-             'curl' 'libxslt' 'openssl' 'db' 'gmp' 'systemd')
+             'curl' 'libxslt' 'openssl' 'db' 'gmp' 'systemd' 'git')
 checkdepends=('procps-ng')
 source=("http://www.php.net/distributions/${pkgbase%5}-${pkgver}.tar.xz"
         "http://www.php.net/distributions/${pkgbase%5}-${pkgver}.tar.xz.asc"
@@ -270,7 +270,7 @@ package_php5() {
 	sed -i "/^includedir=/c \includedir=/usr/include/${pkgbase}" ${pkgdir}/usr/bin/${pkgbase/php/phpize}
 	sed -i "/^include_dir=/c \include_dir=/usr/include/${pkgbase}" ${pkgdir}/usr/bin/${pkgbase/php/php-config}
 
-	# make phpize use php-config5
+	# make phpize use php-config
 	sed -i "/^\[  --with-php-config=/c \[  --with-php-config=PATH  Path to php-config [${pkgbase/php/php-config}]], ${pkgbase/php/php-config}, no)" ${pkgdir}/usr/lib/${pkgbase}/build/phpize.m4
 }
 
