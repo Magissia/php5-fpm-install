@@ -320,7 +320,7 @@ package_php5-pear() {
 	pkgdesc='PHP Extension and Application Repository'
 	depends=('${pkgbase}')
 	provides=('${pkgbase%5}-pear=$pkgver')
-	backup=('etc/php/pear.conf')
+	backup=('etc/${pkgbase}/pear.conf')
 
 	cd ${srcdir}/build-pear
 	make install-pear INSTALL_ROOT=${pkgdir}
