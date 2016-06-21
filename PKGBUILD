@@ -1,5 +1,7 @@
 # $Id$
 # Maintainer: Magissia <ArchPackage@magissia.com>
+# Contributor: Pierre Schmitz <pierre@archlinux.de>
+# Contributor: mickael9 <mickael9 at gmail.com>
 
 pkgbase=php5
 pkgname=("${pkgbase}"
@@ -23,8 +25,9 @@ pkgname=("${pkgbase}"
          "${pkgbase}-sqlite"
          "${pkgbase}-tidy"
          "${pkgbase}-xsl")
-pkgver=5.6.16
+pkgver=5.6.22
 pkgrel=2
+pkgdesc="PHP is a server-side scripting language designed for web development but also used as a general-purpose programming language. "
 arch=('i686' 'x86_64')
 license=('PHP')
 url='http://www.php.net'
