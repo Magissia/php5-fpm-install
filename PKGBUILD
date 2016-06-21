@@ -276,7 +276,8 @@ package_php5() {
 
 package_php5-cgi() {
 	pkgdesc='CGI and FCGI SAPI for PHP'
-	depends=('php')
+	depends=('${pkgbase}')
+	provides=('${pkgbase%5}-cgi=$pkgver')
 
 	install -D -m755 ${srcdir}/build-cgi/sapi/cgi/php-cgi ${pkgdir}/usr/bin/${pkgbase}-cgi
 }
@@ -284,8 +285,9 @@ package_php5-cgi() {
 
 package_php5-fpm() {
 	pkgdesc='FastCGI Process Manager for PHP'
-	depends=('php' 'systemd')
-	backup=('etc/php/php-fpm.conf')
+	depends=('${pkgbase}' 'systemd')
+	provides=('${pkgbase%5}-fpm=$pkgver')
+	backup=('etc/${pkgbase}/php-fpm.conf')
 	install='php-fpm.install'
 
 	install -D -m755 ${srcdir}/build-fpm/sapi/fpm/php-fpm ${pkgdir}/usr/bin/${pkgbase}-fpm
@@ -299,7 +301,8 @@ package_php5-fpm() {
 
 package_php5-embed() {
 	pkgdesc='Embedded PHP SAPI library'
-	depends=('php')
+	depends=('${pkgbase}')
+	provides=('${pkgbase%5}-embed=$pkgver')
 
 	install -D -m755 ${srcdir}/build-embed/libs/libphp5.so ${pkgdir}/usr/lib/libphp5.so
 	install -D -m644 ${srcdir}/${pkgbase}-${pkgver}/sapi/embed/php_embed.h ${pkgdir}/usr/include/${pkgbase}/sapi/embed/php_embed.h
@@ -307,14 +310,16 @@ package_php5-embed() {
 
 package_php5-phpdbg() {
 	pkgdesc='Interactive PHP debugger'
-	depends=('php')
+	depends=('${pkgbase}')
+	provides=('${pkgbase%5}-phpbg=$pkgver')
 
 	install -D -m755 ${srcdir}/build-phpdbg/sapi/phpdbg/phpdbg ${pkgdir}/usr/bin/${pkgbase}dbg
 }
 
 package_php5-pear() {
 	pkgdesc='PHP Extension and Application Repository'
-	depends=('php')
+	depends=('${pkgbase}')
+	provides=('${pkgbase%5}-pear=$pkgver')
 	backup=('etc/php/pear.conf')
 
 	cd ${srcdir}/build-pear
@@ -328,56 +333,64 @@ package_php5-pear() {
 
 package_php5-enchant() {
 	pkgdesc='enchant module for PHP'
-	depends=('php' 'enchant')
+	depends=('${pkgbase}' 'enchant')
+	provides=('${pkgbase%5}-enchant=$pkgver')
 
 	install -D -m755 ${srcdir}/build-php/modules/enchant.so ${pkgdir}/usr/lib/${pkgbase}/modules/enchant.so
 }
 
 package_php5-gd() {
 	pkgdesc='gd module for PHP'
-	depends=('php' 'gd')
+	depends=('${pkgbase}' 'gd')
+	provides=('${pkgbase%5}-gd=$pkgver')
 
 	install -D -m755 ${srcdir}/build-php/modules/gd.so ${pkgdir}/usr/lib/${pkgbase}/modules/gd.so
 }
 
 package_php5-imap() {
 	pkgdesc='imap module for PHP'
-	depends=('php' 'c-client')
+	depends=('${pkgbase}' 'c-client')
+	provides=('${pkgbase%5}-imap=$pkgver')
 
 	install -D -m755 ${srcdir}/build-php/modules/imap.so ${pkgdir}/usr/lib/${pkgbase}/modules/imap.so
 }
 
 package_php5-intl() {
 	pkgdesc='intl module for PHP'
-	depends=('php' 'icu')
+	depends=('${pkgbase}' 'icu')
+	provides=('${pkgbase%5}-intl=$pkgver')
 
 	install -D -m755 ${srcdir}/build-php/modules/intl.so ${pkgdir}/usr/lib/${pkgbase}/modules/intl.so
 }
 
 package_php5-ldap() {
 	pkgdesc='ldap module for PHP'
-	depends=('php' 'libldap')
+	depends=('${pkgbase}' 'libldap')
+	provides=('${pkgbase%5}-ldap=$pkgver')
 
 	install -D -m755 ${srcdir}/build-php/modules/ldap.so ${pkgdir}/usr/lib/${pkgbase}/modules/ldap.so
 }
 
 package_php5-mcrypt() {
 	pkgdesc='mcrypt module for PHP'
-	depends=('php' 'libmcrypt' 'libltdl')
+	depends=('${pkgbase}' 'libmcrypt' 'libltdl')
+	provides=('${pkgbase%5}-mcrypt=$pkgver')
 
 	install -D -m755 ${srcdir}/build-php/modules/mcrypt.so ${pkgdir}/usr/lib/${pkgbase}/modules/mcrypt.so
 }
 
 package_php5-mssql() {
 	pkgdesc='mssql module for PHP'
-	depends=('php' 'freetds')
+	depends=('${pkgbase}' 'freetds')
+	provides=('${pkgbase%5}-mssql=$pkgver')
 
 	install -D -m755 ${srcdir}/build-php/modules/mssql.so ${pkgdir}/usr/lib/${pkgbase}/modules/mssql.so
 }
 
 package_php5-odbc() {
 	pkgdesc='ODBC modules for PHP'
-	depends=('php' 'unixodbc')
+	depends=('${pkgbase}' 'unixodbc')
+	provides=('${pkgbase%5}-odbc=$pkgver')
 
 	install -D -m755 ${srcdir}/build-php/modules/odbc.so ${pkgdir}/usr/lib/${pkgbase}/modules/odbc.so
 	install -D -m755 ${srcdir}/build-php/modules/pdo_odbc.so ${pkgdir}/usr/lib/${pkgbase}/modules/pdo_odbc.so
@@ -385,7 +398,8 @@ package_php5-odbc() {
 
 package_php5-pgsql() {
 	pkgdesc='PostgreSQL modules for PHP'
-	depends=('php' 'postgresql-libs')
+	depends=('${pkgbase}' 'postgresql-libs')
+	provides=('${pkgbase%5}-pgsql=$pkgver')
 
 	install -D -m755 ${srcdir}/build-php/modules/pgsql.so ${pkgdir}/usr/lib/${pkgbase}/modules/pgsql.so
 	install -D -m755 ${srcdir}/build-php/modules/pdo_pgsql.so ${pkgdir}/usr/lib/${pkgbase}/modules/pdo_pgsql.so
@@ -393,21 +407,24 @@ package_php5-pgsql() {
 
 package_php5-pspell() {
 	pkgdesc='pspell module for PHP'
-	depends=('php' 'aspell')
+	depends=('${pkgbase}' 'aspell')
+	provides=('${pkgbase%5}-pspell=$pkgver')
 
 	install -D -m755 ${srcdir}/build-php/modules/pspell.so ${pkgdir}/usr/lib/${pkgbase}/modules/pspell.so
 }
 
 package_php5-snmp() {
 	pkgdesc='snmp module for PHP'
-	depends=('php' 'net-snmp')
+	depends=('${pkgbase}' 'net-snmp')
+	provides=('${pkgbase%5}-snmp=$pkgver')
 
 	install -D -m755 ${srcdir}/build-php/modules/snmp.so ${pkgdir}/usr/lib/${pkgbase}/modules/snmp.so
 }
 
 package_php5-sqlite() {
 	pkgdesc='sqlite module for PHP'
-	depends=('php' 'sqlite')
+	depends=('${pkgbase}' 'sqlite')
+	provides=('${pkgbase%5}-sqlite=$pkgver')
 
 	install -D -m755 ${srcdir}/build-php/modules/sqlite3.so ${pkgdir}/usr/lib/${pkgbase}/modules/sqlite3.so
 	install -D -m755 ${srcdir}/build-php/modules/pdo_sqlite.so ${pkgdir}/usr/lib/${pkgbase}/modules/pdo_sqlite.so
@@ -415,7 +432,8 @@ package_php5-sqlite() {
 
 package_php5-tidy() {
 	pkgdesc='tidy module for PHP'
-	depends=('php' 'tidyhtml')
+	depends=('${pkgbase}' 'tidyhtml')
+	provides=('${pkgbase%5}-tidy=$pkgver')
 
 	install -D -m755 ${srcdir}/build-php/modules/tidy.so ${pkgdir}/usr/lib/${pkgbase}/modules/tidy.so
 }
@@ -423,14 +441,15 @@ package_php5-tidy() {
 package_php5-dblib() {
 	pkgdesc='dblib module for PHP'
 	depends=("${pkgbase}")
-	provides=("${_pkgbase}-dblib=$pkgver")
+	provides=("${pkgbase%5}-dblib=$pkgver")
 
 	install -D -m755 ${srcdir}/build-php/modules/pdo_dblib.so ${pkgdir}/usr/lib/${pkgbase}/modules/pdo_dblib.so
 }
 
 package_php5-xsl() {
 	pkgdesc='xsl module for PHP'
-	depends=('php' 'libxslt')
+	depends=('${pkgbase}' 'libxslt')
+	provides=('${pkgbase%5}-xsl=$pkgver')
 
 	install -D -m755 ${srcdir}/build-php/modules/xsl.so ${pkgdir}/usr/lib/${pkgbase}/modules/xsl.so
 }
