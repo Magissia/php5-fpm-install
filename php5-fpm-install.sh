@@ -87,10 +87,14 @@ function AptInstall	{
 					}
 
 	make && checkinstall -D -y \
-			--install=no
-			--pkgname=php5-fpm
-			--pkgversion=$pkgver
-			--pkglicence=GPL
-			--maintainer=Unknown #<-- FIXME
-			--nodoc
+			--install=no \
+			--fstrans=no
+			--pkgname=php5-fpm \
+			--pkgversion=$pkgver \
+			--pkglicence=GPL \
+			--maintainer=Unknown \ #<-- FIXME
+			--pkgarch=$(dpkg --print-architecture)
+			--nodoc \
+			--umask=0027 \
+			--provides="php5-fpm" \
 			--requires="init-system-helpers  \(\>= 1.18\~\), libbz2-1.0, libc6 \(\>= 2.15\), libcomerr2 \(>=1.01\), libdb5.3, libgssapi-krb5-2 \(\>= 1.6.dfsg.2\), libk5crypto3 \(\>= 1.6.dfsg.2\), libkrb5-3 \(\>= 1.6.dfsg.2\), libmagic1, libonig2 (>= 5.9.5), libpcre3, libqdbm14 \(\>= 1.8.74\), libssl1.0.2 \(\>= 1.0.2d\), libsystemd0, libxml2 \(\>= 2.9.0\), mime-support, tzdata, ucf, zlib1g \(\>= 1:1.1.4\)"
