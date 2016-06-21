@@ -5,7 +5,7 @@
  ; or per-virtualhost web server configuration file.
  ; http://php.net/open-basedir
 -;open_basedir =
-+open_basedir = /srv/http/:/home/:/tmp/:/usr/share/pear/:/usr/share/webapps/
++open_basedir = /srv/http/:/home/:/tmp/:/usr/share/php5/pear/:/usr/share/webapps/:/srv/web/
  
  ; This directive allows you to disable certain functions for security reasons.
  ; It receives a comma-delimited list of function names.
@@ -14,7 +14,7 @@
  
  ; UNIX: "/path1:/path2"
 -;include_path = ".:/php/includes"
-+include_path = ".:/usr/share/pear"
++include_path = ".:/usr/share/php5/pear"
  ;
  ; Windows: "\path1;\path2"
  ;include_path = ".;c:\php\includes"
@@ -23,7 +23,7 @@
  ; Directory in which the loadable extensions (modules) reside.
  ; http://php.net/extension-dir
 -; extension_dir = "./"
-+extension_dir = "/usr/lib/php/modules/"
++extension_dir = "/usr/lib/php5/modules/"
  ; On windows:
  ; extension_dir = "ext"
  
@@ -88,14 +88,14 @@
 +;extension=imap.so
 +;extension=intl.so
 +;extension=ldap.so
-+;extension=mcrypt.so
++extension=mcrypt.so
 +;extension=mssql.so
 +;extension=mysql.so
 +;extension=mysqli.so
 +;extension=odbc.so
 +;zend_extension=opcache.so
 +;extension=openssl.so
-+;extension=pdo_mysql.so
++extension=pdo_mysql.so
 +;extension=pdo_odbc.so
 +;extension=pdo_pgsql.so
 +;extension=pdo_sqlite.so
