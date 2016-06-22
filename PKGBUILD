@@ -146,7 +146,7 @@ build() {
 	cd "${srcdir}/${pkgbase%5}-${pkgver}"
 
 	# php
-	mkdir "${srcdir}/build-php"
+	mkdir -p "${srcdir}/build-php"
 	cd "${srcdir}/build-php"
 	ln -s ../${pkgbase%5}-${pkgver}/configure
 	./configure ${_phpconfig} \
