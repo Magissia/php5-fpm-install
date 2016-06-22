@@ -51,7 +51,7 @@ validpgpkeys=('6E4F6AB321FDC07F2C332E3AC2BF0BC433CFC8B3'
               '0BD78B5F97500D450838F95DFE857D9A90D90EC1')
 
 prepare() {
-	cd ${srcdir}/${pkgbase%5}-${pkgver}
+	cd '${srcdir}/${pkgbase%5}-${pkgver}'
 
 	patch -p0 -i ${srcdir}/php.ini.patch
 	patch -p0 -i ${srcdir}/php-fpm.conf.in.patch
@@ -143,7 +143,7 @@ build() {
 	export EXTENSION_DIR=/usr/lib/${pkgbase}/modules
 	export PEAR_INSTALLDIR=/usr/share/${pkgbase}/pear
 
-	cd ${srcdir}/${pkgbase}-${pkgver}
+	cd '${srcdir}/${pkgbase}-${pkgver}'
 
 	# php
 	mkdir ${srcdir}/build-php
