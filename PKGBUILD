@@ -210,25 +210,25 @@ build() {
 	make
 }
 
-check() {
-	# tests on i686 fail
-	[[ $CARCH == 'i686' ]] && return
-	# a couple of tests fail in btrfs-backed chroots
-	[[ $(stat -f -c %T .) == btrfs ]] && return
+# check() {
+# 	# tests on i686 fail
+# 	[[ $CARCH == 'i686' ]] && return
+# 	# a couple of tests fail in btrfs-backed chroots
+# 	[[ $(stat -f -c %T .) == btrfs ]] && return
 
-	cd "${srcdir}/build-php"
+# 	cd "${srcdir}/build-php"
 
-	export REPORT_EXIT_STATUS=1
-	export NO_INTERACTION=1
-	export SKIP_ONLINE_TESTS=1
-	export SKIP_SLOW_TESTS=1
+# 	export REPORT_EXIT_STATUS=1
+# 	export NO_INTERACTION=1
+# 	export SKIP_ONLINE_TESTS=1
+# 	export SKIP_SLOW_TESTS=1
 
-	sapi/cli/php -n \
-		"${srcdir}/${pkgbase}-${pkgver}/run-tests.php" -n -P \
-		"${srcdir}/${pkgbase}-${pkgver}/{Zend,ext/{date,pcre,spl,standard},sapi/cli}"
+# 	sapi/cli/php -n \
+# 		"${srcdir}/${pkgbase}-${pkgver}/run-tests.php" -n -P \
+# 		"${srcdir}/${pkgbase}-${pkgver}/{Zend,ext/{date,pcre,spl,standard},sapi/cli}"
 
-	echo
-}
+# 	echo
+# }
 
 package_php5() {
 	pkgdesc='An HTML-embedded scripting language'
