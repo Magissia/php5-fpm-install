@@ -32,6 +32,7 @@ function PacManInstall 	{
 	gpg --keyserver pgp.mit.edu --recv-keys FE857D9A90D90EC1
 	[ -e $SCRIPTDIRECTORY/PKGBUILD ] || { exit 11; echo "PKGBUILD missing !"}
 	cd $SCRIPTDIRECTORY
+	git clean -d -f
 	makepkg --syncdeps --rmdeps
 #Let's dream of a world where this isn't required ->	[ -e $SCRIPTDIRECTORY/generate_patches ] || { exit 12; echo "generate_patches missing !"}
 #Let's dream of a world where this isn't required ->	[ -e $SCRIPTDIRECTORY/php-fpm.install ] || { exit 13; echo "php-fpm.install missing !"}
