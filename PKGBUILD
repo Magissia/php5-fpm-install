@@ -124,6 +124,7 @@ build() {
 		--with-mysqli=shared,mysqlnd \
 		--with-openssl=shared \
 		--with-pcre-regex=/usr \
+		--with-pdo-dblib=shared,/usr \
 		--with-pdo-mysql=shared,mysqlnd \
 		--with-pdo-odbc=shared,unixODBC,/usr \
 		--with-pdo-pgsql=shared \
