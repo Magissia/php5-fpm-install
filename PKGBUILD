@@ -304,7 +304,7 @@ package_php5-embed() {
 	provides=('${pkgbase%5}-embed=$pkgver')
 
 	install -D -m755 "${srcdir}/build-embed/libs/libphp5.so" "${pkgdir}/usr/lib/libphp5.so"
-	install -D -m644 "${srcdir}/${pkgbase}-${pkgver}/sapi/embed/php_embed.h" "${pkgdir}/usr/include/${pkgbase}/sapi/embed/php_embed.h"
+	install -D -m644 "${srcdir}/${pkgbase%5}-${pkgver}/sapi/embed/php_embed.h" "${pkgdir}/usr/include/${pkgbase}/sapi/embed/php_embed.h"
 }
 
 package_php5-phpdbg() {
