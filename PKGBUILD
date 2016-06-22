@@ -38,10 +38,9 @@ makedepends=('c-client' 'postgresql-libs' 'libldap' 'postfix'
 checkdepends=('procps-ng')
 source=("http://www.php.net/distributions/${pkgbase%5}-${pkgver}.tar.xz"
         "http://www.php.net/distributions/${pkgbase%5}-${pkgver}.tar.xz.asc"
-        'php.ini.patch' 'apache.conf' 'php-fpm.conf.in.patch'
+        'php.ini.patch' 'php-fpm.conf.in.patch'
         'logrotate.d.php-fpm' 'php-fpm.service' 'php-fpm.tmpfiles')
-md5sums=('19a5bcbddc105dfb29482ab779fcc795'
-         'SKIP'
+md5sums=('SKIP'
          'SKIP'
          'SKIP'
          'SKIP'
