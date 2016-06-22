@@ -143,7 +143,7 @@ build() {
 	export EXTENSION_DIR=/usr/lib/${pkgbase}/modules
 	export PEAR_INSTALLDIR=/usr/share/${pkgbase}/pear
 
-	cd "${srcdir}/${pkgbase}-${pkgver}"
+	cd "${srcdir}/${pkgbase%5}-${pkgver}"
 
 	# php
 	mkdir "${srcdir}/build-php"
