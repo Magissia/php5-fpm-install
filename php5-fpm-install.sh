@@ -7,10 +7,22 @@ pkgbase="php"
 pkgver="5.6.22"
 
 function CheckPackageManager 	{
+	CheckArchLinux()
+	if [ $? = 0]; then
+		PacManInstall()
+		return ArchLinux
+	fi
 	CheckPacman()
 	if [ $? = 0 ]; then
 		PacManInstall()
+		return PacMan
+	fi
 								}
+
+function CheckArchLinux	{
+	cat /etc/issue | grep "Arch Linux" || return 1
+	return 0
+						}
 
 function CheckPacman 	{
 	command -v pacman >/dev/null 2>&1 || return 1
@@ -28,6 +40,7 @@ function CheckYum	{
 					}
 
 function PacManInstall 	{
+	echo "Let's trust gpg keys from the PHP project"
 	gpg --keyserver pgp.mit.edu --recv-keys C2BF0BC433CFC8B3
 	gpg --keyserver pgp.mit.edu --recv-keys FE857D9A90D90EC1
 	[ -e $SCRIPTDIRECTORY/PKGBUILD ] || { exit 11; echo "PKGBUILD missing !"}
