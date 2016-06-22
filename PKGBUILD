@@ -259,11 +259,11 @@ package_php5() {
 	ln -sf "phar.${pkgbase/php/phar}" "${pkgdir}/usr/bin/${pkgbase/php/phar}"
 
 	# rename executables
-	mv "${pkgdir}/usr/bin/phar.{phar,${pkgbase/php/phar}}"
+	mv ${pkgdir}/usr/bin/phar.{phar,${pkgbase/php/phar}}
 
 	# rename man pages
-	mv "${pkgdir}/usr/share/man/man1/{phar,${pkgbase/php/phar}}.1"
-	mv "${pkgdir}/usr/share/man/man1/phar.{phar,${pkgbase/php/phar}}.1"
+	mv ${pkgdir}/usr/share/man/man1/{phar,${pkgbase/php/phar}}.1
+	mv ${pkgdir}/usr/share/man/man1/phar.{phar,${pkgbase/php/phar}}.1
 
 	# fix paths in executables
 	sed -i "/^includedir=/c \includedir=/usr/include/${pkgbase}" "${pkgdir}/usr/bin/${pkgbase/php/phpize}"
@@ -278,7 +278,7 @@ package_php5-cgi() {
 	depends=('${pkgbase}')
 	provides=('${pkgbase%5}-cgi=$pkgver')
 
-	install -D -m755 "${srcdir}/build-cgi/sapi/cgi/php-cgi ${pkgdir}/usr/bin/${pkgbase}-cgi"
+	install -D -m755 "${srcdir}/build-cgi/sapi/cgi/php-cgi" "${pkgdir}/usr/bin/${pkgbase}-cgi"
 }
 
 
@@ -289,13 +289,13 @@ package_php5-fpm() {
 	backup=('etc/${pkgbase}/php-fpm.conf')
 	install='php-fpm.install'
 
-	install -D -m755 "${srcdir}/build-fpm/sapi/fpm/php-fpm ${pkgdir}/usr/bin/${pkgbase}-fpm"
-	install -D -m644 "${srcdir}/build-fpm/sapi/fpm/php-fpm.8 ${pkgdir}/usr/share/man/man8/${pkgbase}-fpm.8"
-	install -D -m644 "${srcdir}/build-fpm/sapi/fpm/php-fpm.conf ${pkgdir}/etc/${pkgbase}/php-fpm.conf"
-	install -D -m644 "${srcdir}/logrotate.d.php-fpm ${pkgdir}/etc/logrotate.d/${pkgbase}-fpm"
+	install -D -m755 "${srcdir}/build-fpm/sapi/fpm/php-fpm" "${pkgdir}/usr/bin/${pkgbase}-fpm"
+	install -D -m644 "${srcdir}/build-fpm/sapi/fpm/php-fpm.8" "${pkgdir}/usr/share/man/man8/${pkgbase}-fpm.8"
+	install -D -m644 "${srcdir}/build-fpm/sapi/fpm/php-fpm.conf" "${pkgdir}/etc/${pkgbase}/php-fpm.conf"
+	install -D -m644 "${srcdir}/logrotate.d.php-fpm" "${pkgdir}/etc/logrotate.d/${pkgbase}-fpm"
 	install -d -m755 "${pkgdir}/etc/${pkgbase}/fpm.d"
-	install -D -m644 "${srcdir}/php-fpm.tmpfiles ${pkgdir}/usr/lib/tmpfiles.d/${pkgbase}-fpm.conf"
-	install -D -m644 "${srcdir}/php-fpm.service ${pkgdir}/usr/lib/systemd/system/${pkgbase}-fpm.service"
+	install -D -m644 "${srcdir}/php-fpm.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/${pkgbase}-fpm.conf"
+	install -D -m644 "${srcdir}/php-fpm.service" "${pkgdir}/usr/lib/systemd/system/${pkgbase}-fpm.service"
 }
 
 package_php5-embed() {
