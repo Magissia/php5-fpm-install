@@ -28,35 +28,39 @@ function CheckYum	{
 					}
 
 function PacManInstall 	{
+	gpg --keyserver pgp.mit.edu --recv-keys C2BF0BC433CFC8B3
+	gpg --keyserver pgp.mit.edu --recv-keys FE857D9A90D90EC1
 	[ -e $SCRIPTDIRECTORY/PKGBUILD ] || { exit 11; echo "PKGBUILD missing !"}
-	[ -e $SCRIPTDIRECTORY/generate_patches ] || { exit 12; echo "generate_patches missing !"}
-	[ -e $SCRIPTDIRECTORY/php-fpm.install ] || { exit 13; echo "php-fpm.install missing !"}
-	[ -e $SCRIPTDIRECTORY/php-fpm.patch ] || { exit 13; echo "php-fpm.patch missing !"}
-	[ -e $SCRIPTDIRECTORY/php-fpm.tmpfiles ] || { exit 13; echo "php-fpm.tmpfiles missing !"}
-	command -v makepkg >/dev/null 2>&1 || pacman -S --noconfirm makepkg
-	command -v make >/dev/null 2>&1 || pacman -S --noconfirm make
-	command -v curl >/dev/null 2>&1 || pacman -S --noconfirm curl
-	command -v xml2-config >/dev/null 2>&1 || pacman -S --noconfirm libxml2
-	command -v ziptool >/dev/null 2>&1 || pacman -S --noconfirm libzip
-	command -v aspell >/dev/null 2>&1 || pacman -S --noconfirm aspell
-	[ -e /usr/lib/libmcrypt.so ] || pacman -S --noconfirm libmcrypt
-	[ -e /usr/lib/c-client.a ] || pacman -S --noconfirm c-client
-	command -v db_verify >/dev/null 2>&1 || pacman -S --noconfirm db
-	command -v enchant >/dev/null 2>&1 || pacman -S --noconfirm enchant
-	command -v bsqldb >/dev/null 2>&1 || pacman -S --noconfirm freetds
-	command -v webpng >/dev/null 2>&1 || pacman -S --noconfirm gd
-	[ -e /usr/lib/libgmp.so ] || pacman -S --noconfirm gmp
-	command -v icupkg >/dev/null 2>&1 || pacman -S --noconfirm icu
-	command -v libtool >/dev/null 2>&1 || pacman -S --noconfirm libtool
-	command -v xsltproc >/dev/null 2>&1 || pacman -S --noconfirm libxslt
-	command -v fixproc >/dev/null 2>&1 || pacman -S --noconfirm net-snmp
-	command -v postqueue >/dev/null 2>&1 || pacman -S --noconfirm postfix
-	command -v createdb >/dev/null 2>&1 || pacman -S --noconfirm postgresql-libs
-	command -v sqlite3 >/dev/null 2>&1 || pacman -S --noconfirm sqlite
-	command -v systemctl >/dev/null 2>&1 || pacman -S --noconfirm systemd
-	command -v tidy >/dev/null 2>&1 || pacman -S --noconfirm tidy
-	[ -e /usr/lib/libodbc.so ] || pacman -S --noconfirm unixobdc
-	[ -e /usr/lib/libprocps.so ] || pacman -S --noconfirm procps-ng
+	cd $SCRIPTDIRECTORY
+	makepkg --syncdeps --rmdeps
+#Let's dream of a world where this isn't required ->	[ -e $SCRIPTDIRECTORY/generate_patches ] || { exit 12; echo "generate_patches missing !"}
+#Let's dream of a world where this isn't required ->	[ -e $SCRIPTDIRECTORY/php-fpm.install ] || { exit 13; echo "php-fpm.install missing !"}
+#Let's dream of a world where this isn't required ->	[ -e $SCRIPTDIRECTORY/php-fpm.patch ] || { exit 13; echo "php-fpm.patch missing !"}
+#Let's dream of a world where this isn't required ->	[ -e $SCRIPTDIRECTORY/php-fpm.tmpfiles ] || { exit 13; echo "php-fpm.tmpfiles missing !"}
+#Let's dream of a world where this isn't required ->	command -v makepkg >/dev/null 2>&1 || pacman -S --noconfirm makepkg
+#Let's dream of a world where this isn't required ->	command -v make >/dev/null 2>&1 || pacman -S --noconfirm make
+#Let's dream of a world where this isn't required ->	command -v curl >/dev/null 2>&1 || pacman -S --noconfirm curl
+#Let's dream of a world where this isn't required ->	command -v xml2-config >/dev/null 2>&1 || pacman -S --noconfirm libxml2
+#Let's dream of a world where this isn't required ->	command -v ziptool >/dev/null 2>&1 || pacman -S --noconfirm libzip
+#Let's dream of a world where this isn't required ->	command -v aspell >/dev/null 2>&1 || pacman -S --noconfirm aspell
+#Let's dream of a world where this isn't required ->	[ -e /usr/lib/libmcrypt.so ] || pacman -S --noconfirm libmcrypt
+#Let's dream of a world where this isn't required ->	[ -e /usr/lib/c-client.a ] || pacman -S --noconfirm c-client
+#Let's dream of a world where this isn't required ->	command -v db_verify >/dev/null 2>&1 || pacman -S --noconfirm db
+#Let's dream of a world where this isn't required ->	command -v enchant >/dev/null 2>&1 || pacman -S --noconfirm enchant
+#Let's dream of a world where this isn't required ->	command -v bsqldb >/dev/null 2>&1 || pacman -S --noconfirm freetds
+#Let's dream of a world where this isn't required ->	command -v webpng >/dev/null 2>&1 || pacman -S --noconfirm gd
+#Let's dream of a world where this isn't required ->	[ -e /usr/lib/libgmp.so ] || pacman -S --noconfirm gmp
+#Let's dream of a world where this isn't required ->	command -v icupkg >/dev/null 2>&1 || pacman -S --noconfirm icu
+#Let's dream of a world where this isn't required ->	command -v libtool >/dev/null 2>&1 || pacman -S --noconfirm libtool
+#Let's dream of a world where this isn't required ->	command -v xsltproc >/dev/null 2>&1 || pacman -S --noconfirm libxslt
+#Let's dream of a world where this isn't required ->	command -v fixproc >/dev/null 2>&1 || pacman -S --noconfirm net-snmp
+#Let's dream of a world where this isn't required ->	command -v postqueue >/dev/null 2>&1 || pacman -S --noconfirm postfix
+#Let's dream of a world where this isn't required ->	command -v createdb >/dev/null 2>&1 || pacman -S --noconfirm postgresql-libs
+#Let's dream of a world where this isn't required ->	command -v sqlite3 >/dev/null 2>&1 || pacman -S --noconfirm sqlite
+#Let's dream of a world where this isn't required ->	command -v systemctl >/dev/null 2>&1 || pacman -S --noconfirm systemd
+#Let's dream of a world where this isn't required ->	command -v tidy >/dev/null 2>&1 || pacman -S --noconfirm tidy
+#Let's dream of a world where this isn't required ->	[ -e /usr/lib/libodbc.so ] || pacman -S --noconfirm unixobdc
+#Let's dream of a world where this isn't required ->	[ -e /usr/lib/libprocps.so ] || pacman -S --noconfirm procps-ng
 						}
 
 function AptInstall	{
