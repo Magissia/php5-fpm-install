@@ -324,11 +324,11 @@ package_php5-pear() {
 
 	cd ${srcdir}/build-pear
 	make install-pear INSTALL_ROOT=${pkgdir}
-	rm -rf "${pkgdir}/usr/share/${pkgbase}/pear/.{channels,depdb,depdblock,filemap,lock,registry}"
+	rm -rf ${pkgdir}{/usr/share/${pkgbase}/pear,}/.{channels,depdb,depdblock,filemap,lock,registry}
 
-	mv "${pkgdir}/usr/bin/{pear,${pkgbase/php/pear}}"
-	mv "${pkgdir}/usr/bin/{peardev,${pkgbase/php/peardev}}"
-	mv "${pkgdir}/usr/bin/{pecl,${pkgbase/php/pecl}}"
+	mv ${pkgdir}/usr/bin/{pear,${pkgbase/php/pear}}
+	mv ${pkgdir}/usr/bin/{peardev,${pkgbase/php/peardev}}
+	mv ${pkgdir}/usr/bin/{pecl,${pkgbase/php/pecl}}
 }
 
 package_php5-enchant() {
