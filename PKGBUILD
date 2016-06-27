@@ -245,9 +245,9 @@ package_php5() {
 	install -d -m755 "${pkgdir}/etc/${pkgbase}/conf.d/"
 
 	# remove static modules
-	rm -f "${pkgdir}/usr/lib/${pkgbase}/modules/*.a"
+	rm -f "$pkgdir/usr/lib/$pkgbase/modules/"*.a
 	# remove modules provided by sub packages
-	rm -f "${pkgdir}/usr/lib/${pkgbase}/modules/{enchant,gd,imap,intl,ldap,mcrypt,mssql,odbc,pdo_odbc,pgsql,pdo_pgsql,pspell,snmp,sqlite3,pdo_sqlite,tidy,xsl,pdo_dblib}.so"
+	rm -f "$pkgdir/usr/lib/$pkgbase/modules/"{enchant,gd,imap,intl,ldap,mcrypt,mssql,odbc,pdo_odbc,pgsql,pdo_pgsql,pspell,snmp,sqlite3,pdo_sqlite,tidy,xsl,pdo_dblib}.so
 
 	# remove empty directory
 	rmdir "${pkgdir}/usr/include/php/include"
