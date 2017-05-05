@@ -1,5 +1,5 @@
 --- php.ini-production	2015-01-21 01:40:37.000000000 +0100
-+++ php.ini-production	2015-01-22 16:23:17.311890258 +0100
++++ php.ini-production	2017-05-05 16:23:17.311890258 +0100
 @@ -295,7 +295,7 @@
  ; and below.  This directive makes most sense if used in a per-directory
  ; or per-virtualhost web server configuration file.
@@ -74,14 +74,14 @@
 -;extension=php_xmlrpc.dll
 -;extension=php_xsl.dll
 +;extension=bcmath.so
-+;extension=bz2.so
++extension=bz2.so
 +;extension=calendar.so
 +extension=curl.so
 +;extension=dba.so
 +;extension=enchant.so
 +;extension=exif.so
 +;extension=ftp.so
-+;extension=gd.so
++extension=gd.so
 +extension=gettext.so
 +;extension=gmp.so
 +;extension=iconv.so
@@ -94,7 +94,7 @@
 +;extension=mysqli.so
 +;extension=odbc.so
 +;zend_extension=opcache.so
-+;extension=openssl.so
++extension=openssl.so
 +extension=pdo_mysql.so
 +;extension=pdo_odbc.so
 +;extension=pdo_pgsql.so

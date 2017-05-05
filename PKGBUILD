@@ -25,7 +25,7 @@ pkgname=("${pkgbase}"
          "${pkgbase}-sqlite"
          "${pkgbase}-tidy"
          "${pkgbase}-xsl")
-pkgver=5.6.22
+pkgver=5.6.30
 pkgrel=2
 pkgfixname=5
 pkgdesc="PHP is a server-side scripting language designed for web development but also used as a general-purpose programming language. "
