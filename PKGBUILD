@@ -25,7 +25,7 @@ pkgname=("${pkgbase}"
          "${pkgbase}-sqlite"
          "${pkgbase}-tidy"
          "${pkgbase}-xsl")
-pkgver=5.6.30
+pkgver=5.6.31
 pkgrel=2
 pkgfixname=5
 pkgdesc="PHP is a server-side scripting language designed for web development but also used as a general-purpose programming language. "
@@ -41,13 +41,13 @@ source=("http://www.php.net/distributions/${pkgbase%$pkgfixname}-${pkgver}.tar.x
         "http://www.php.net/distributions/${pkgbase%$pkgfixname}-${pkgver}.tar.xz.asc"
         'php.ini.patch' 'php-fpm.conf.in.patch'
         'logrotate.d.php-fpm' 'php-fpm.service' 'php-fpm.tmpfiles')
-md5sums=('SKIP'
-         'SKIP'
-         'SKIP'
-         'SKIP'
-         'SKIP'
-         'SKIP'
-         'SKIP')
+sha256sums=('c464af61240a9b7729fabe0314cdbdd5a000a4f0c9bd201f89f8628732fe4ae4'
+			'SKIP'
+			'SKIP'
+			'SKIP'
+			'SKIP'
+			'SKIP'
+			'SKIP')
 validpgpkeys=('6E4F6AB321FDC07F2C332E3AC2BF0BC433CFC8B3'
               '0BD78B5F97500D450838F95DFE857D9A90D90EC1')
 
@@ -59,6 +59,15 @@ prepare() {
 	
 	# Allow php-tidy to compile with tidy-html5
 	sed 's/buffio\.h/tidybuffio\.h/' -i ext/tidy/tidy.c
+	
+	hash = curl http://php.net/downloads.php | sed -e "php-\$pkgver\.tar\.xz.*$^<span class=\"sha256\">.*" | cut "sha256\">" | cut "</span>"
+	sha256sums=($hash
+				'SKIP'
+				'SKIP'
+				'SKIP'
+				'SKIP'
+				'SKIP'
+				'SKIP')
 }
 
 build() {
