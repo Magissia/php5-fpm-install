@@ -60,7 +60,8 @@ prepare() {
 	# Allow php-tidy to compile with tidy-html5
 	sed 's/buffio\.h/tidybuffio\.h/' -i ext/tidy/tidy.c
 	
-	hash = curl http://php.net/downloads.php | sed -e "php-\$pkgver\.tar\.xz.*$^<span class=\"sha256\">.*" | cut "sha256\">" | cut "</span>"
+	fileURL = curl http://php.net/downloads.php
+	hash = sed -e php-\$pkgver\.tar\.xz.*\n.*<span.*<\/span> fileURL | cut php-.*sha256\"> | cut </span>
 	sha256sums=($hash
 				'SKIP'
 				'SKIP'
