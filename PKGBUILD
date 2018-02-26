@@ -11,7 +11,6 @@ pkgname=("${pkgbase}"
          "${pkgbase}-phpdbg"
          "${pkgbase}-dblib"
          "${pkgbase}-pear"
-         "${pkgbase}-enchant"
          "${pkgbase}-gd"
          "${pkgbase}-imap"
          "${pkgbase}-intl"
@@ -25,15 +24,15 @@ pkgname=("${pkgbase}"
          "${pkgbase}-sqlite"
          "${pkgbase}-tidy"
          "${pkgbase}-xsl")
-pkgver=5.6.31
-pkgrel=2
+pkgver=5.6.33
+pkgrel=1
 pkgfixname=5
 pkgdesc="PHP is a server-side scripting language designed for web development but also used as a general-purpose programming language. "
 arch=('i686' 'x86_64')
 license=('PHP')
 url='http://www.php.net'
 makedepends=('c-client' 'postgresql-libs' 'libldap' 'postfix'
-             'sqlite' 'unixodbc' 'net-snmp' 'libzip' 'enchant' 'file' 'freetds'
+             'sqlite' 'unixodbc' 'net-snmp' 'libzip' 'file' 'freetds'
              'libmcrypt' 'tidyhtml' 'aspell' 'libltdl' 'gd' 'icu'
              'curl' 'libxslt' 'openssl' 'db' 'gmp' 'systemd' 'git')
 checkdepends=('procps-ng')
@@ -41,7 +40,7 @@ source=("http://www.php.net/distributions/${pkgbase%$pkgfixname}-${pkgver}.tar.x
         "http://www.php.net/distributions/${pkgbase%$pkgfixname}-${pkgver}.tar.xz.asc"
         'php.ini.patch' 'php-fpm.conf.in.patch'
         'logrotate.d.php-fpm' 'php-fpm.service' 'php-fpm.tmpfiles')
-sha256sums=('c464af61240a9b7729fabe0314cdbdd5a000a4f0c9bd201f89f8628732fe4ae4'
+sha256sums=('9004995fdf55f111cd9020e8b8aff975df3d8d4191776c601a46988c375f3553'
 			'SKIP'
 			'SKIP'
 			'SKIP'
@@ -111,7 +110,6 @@ build() {
 		--with-bz2=shared \
 		--with-curl=shared \
 		--with-db4=/usr \
-		--with-enchant=shared,/usr \
 		--with-fpm-systemd \
 		--with-freetype-dir=/usr \
 		--with-xpm-dir=/usr \
@@ -344,13 +342,13 @@ package_php5-pear() {
 	mv ${pkgdir}/usr/bin/{pecl,${pkgbase/php/pecl}}
 }
 
-package_php5-enchant() {
-	pkgdesc='enchant module for PHP'
-	depends=("${pkgbase}" 'enchant')
-	provides=('${pkgbase%$pkgfixname}-enchant=$pkgver')
-
-	install -D -m755 "${srcdir}/build-php/modules/enchant.so" "${pkgdir}/usr/lib/${pkgbase}/modules/enchant.so"
-}
+#package_php5-enchant() {
+#	pkgdesc='enchant module for PHP'
+#	depends=("${pkgbase}" 'enchant')
+#	provides=('${pkgbase%$pkgfixname}-enchant=$pkgver')
+#
+#	install -D -m755 "${srcdir}/build-php/modules/enchant.so" "${pkgdir}/usr/lib/${pkgbase}/modules/enchant.so"
+#}
 
 package_php5-gd() {
 	pkgdesc='gd module for PHP'
