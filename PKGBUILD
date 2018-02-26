@@ -154,6 +154,7 @@ build() {
 
 	export EXTENSION_DIR=/usr/lib/${pkgbase}/modules
 	export PEAR_INSTALLDIR=/usr/share/${pkgbase}/pear
+	export PKG_CONFIG_PATH=/usr/lib/openssl-1.0/pkgconfig
 
 	cd "${srcdir}/${pkgbase%$pkgfixname}-${pkgver}"
 
