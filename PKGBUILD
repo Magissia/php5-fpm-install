@@ -40,7 +40,7 @@ source=("http://www.php.net/distributions/${pkgbase%$pkgfixname}-${pkgver}.tar.x
         "http://www.php.net/distributions/${pkgbase%$pkgfixname}-${pkgver}.tar.xz.asc"
         'php.ini.patch' 'php-fpm.conf.in.patch'
         'logrotate.d.php-fpm' 'php-fpm.service' 'php-fpm.tmpfiles')
-sha256sums=('ee78a7e9ca21d8ea394d037c55effff477a49dbae31c7753c547036f5bd73b92'
+sha256sums=('9985cb64cb8224c289effff5b34f670d14f838175f76daea0507d643eec650d2'
 			'SKIP'
 			'SKIP'
 			'SKIP'
