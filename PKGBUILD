@@ -62,7 +62,7 @@ prepare() {
 	str="curl http://php.net/downloads.php | grep -A 1 -G php-$pkgver.tar.xz | grep -A 1 -G sha"
 	str=$(eval $str)
 	hash=${str%</s*}
-	hash=${str#*>}
+	hash=${hash#*>}
 	sha256sums=($hash
 				'SKIP'
 				'SKIP'
