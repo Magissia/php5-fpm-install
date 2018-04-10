@@ -24,7 +24,7 @@ pkgname=("${pkgbase}"
          "${pkgbase}-sqlite"
          "${pkgbase}-tidy"
          "${pkgbase}-xsl")
-pkgver=5.6.33
+pkgver=5.6.35
 pkgrel=1
 pkgfixname=5
 pkgdesc="PHP is a server-side scripting language designed for web development but also used as a general-purpose programming language. "
@@ -40,7 +40,7 @@ source=("http://www.php.net/distributions/${pkgbase%$pkgfixname}-${pkgver}.tar.x
         "http://www.php.net/distributions/${pkgbase%$pkgfixname}-${pkgver}.tar.xz.asc"
         'php.ini.patch' 'php-fpm.conf.in.patch'
         'logrotate.d.php-fpm' 'php-fpm.service' 'php-fpm.tmpfiles')
-sha256sums=('9004995fdf55f111cd9020e8b8aff975df3d8d4191776c601a46988c375f3553'
+sha256sums=('ee78a7e9ca21d8ea394d037c55effff477a49dbae31c7753c547036f5bd73b92'
 			'SKIP'
 			'SKIP'
 			'SKIP'
